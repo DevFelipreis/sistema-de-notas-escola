@@ -1,6 +1,10 @@
+import { Aluno } from "./Aluno";
 import { Usuario } from "./Usuario";
 
-export class Professor extends Usuario {
+interface IProfessor {
+    lancarNota(aluno: Aluno, nota: number): void
+}
+export class Professor extends Usuario implements IProfessor {
     disciplina: string
 
     constructor(nome: string, email: string, senha: string, disciplina: string) {
@@ -12,5 +16,10 @@ export class Professor extends Usuario {
         if (!this.logado) {
             throw new Error("Professor não autenticado")
         }
+    }
+
+    lancarNota(aluno: Aluno, nota: number): void {
+        this.verificarLogin()
+        aluno.notas.push(nota)
     }
 }
